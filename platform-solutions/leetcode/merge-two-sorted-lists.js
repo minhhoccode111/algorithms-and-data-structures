@@ -1,4 +1,3 @@
-console.log("ngu");
 let list1 = [1, 2, 4],
   list2 = [1, 3, 4];
 var mergeTwoLists = function (list1, list2) {
