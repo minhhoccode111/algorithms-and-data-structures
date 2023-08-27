@@ -38,3 +38,45 @@ const longestCommonPrefix = (strs, index = 1, prefix = strs[0]) => {
   if (strs[index].indexOf(prefix) === 0) return longestCommonPrefix(strs, index + 1, prefix);
   return longestCommonPrefix(strs, index, prefix.slice(0, prefix.length - 1));
 };
+
+// shorter recursive approach :)
+const longestCommonPrefix = (strs, index = 1, prefix = strs[0]) =>
+  index === strs.length || prefix === ''
+    ? prefix
+    : strs[index].indexOf(prefix) === 0
+    ? longestCommonPrefix(strs, index + 1, prefix)
+    : longestCommonPrefix(strs, index, prefix.slice(0, prefix.length - 1));
+
+// another recursive approach with 2 pointers each call (current array's item's index and current item's character's index)
+//
+const longestCommonPrefix = (strs, flag = true, index = 1, charIndex = 0, prefix = '') => {
+  // if flag is false or charIndex is greater than the first item in the array's last index
+  // then return prefix
+  if (!flag || charIndex === strs[0].length) return prefix;
+
+  // else if index reach the end of the array, then we know every item in array has the same character at the charIndex position, then we reset index (current item in array) back to 1, and add that character to prefix variable
+  if (index === strs.length) return longestCommonPrefix(strs, flag, 1, charIndex + 1, prefix + strs[index - 1][charIndex]);
+
+  // if current character of item 0 in array equal to current character of current index item in array then we increase index to check the next item in the array
+  if (strs[0][charIndex] === strs[index][charIndex]) return longestCommonPrefix(strs, flag, index + 1, charIndex, prefix);
+
+  // else current character of item 0 in array DOESN'T equal to current character of current index item in array then we toggle flag to false
+  return longestCommonPrefix(strs, false, index, charIndex, prefix);
+};
+
+// or its normal implementation with for loop
+{
+  const longestCommonPrefix = (strs) => {
+    if (!strs || !strs.length) return '';
+
+    let prefix = '';
+
+    for (let i = 0; i < strs[0].length; i++) {
+      const current = strs[0][i];
+      if (strs.every((item) => item[i] === current)) {
+        prefix += current;
+      } else break;
+    }
+    return prefix;
+  };
+}
