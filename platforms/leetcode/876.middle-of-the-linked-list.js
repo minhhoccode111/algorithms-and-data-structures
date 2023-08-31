@@ -22,3 +22,26 @@ console.log('Hello, World!');
     return middleNode(h.next, length + 1, [...arr, h]);
   };
 }
+
+// enhance solution with 2 pointers
+{
+  const middleNode = (head) => {
+    let slow = head;
+    let fast = head;
+
+    while (fast !== null && fast.next !== null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+
+    return slow;
+  };
+}
+
+// its recursion
+{
+  const middleNode = (head, slow = head, fast = head) => {
+    if (fast === null || fast.next === null) return slow;
+    return middleNode(head, slow.next, fast.next.next);
+  };
+}
